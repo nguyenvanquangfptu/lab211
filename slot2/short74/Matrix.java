@@ -3,7 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.mycompany.lab211.slot2.short74;
-
 import com.mycompany.lab211.Utils;
 
 /**
@@ -18,7 +17,19 @@ public class Matrix {
 
     }
 
-    public int[][] generateMatrix(int n, int m) {
+    public Matrix(int[][] data) {
+        this.array = data;
+    }
+
+    public int[][] getArray() {
+        return array;
+    }
+
+    public void setArray(int[][] data) {
+        this.array = data;
+    }
+
+    public Matrix generateMatrix(int n, int m) {
         array = new int[n][m];
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
@@ -27,68 +38,77 @@ public class Matrix {
                 );
             }
         }
-        return array;
+        return this;  // trả về chính đối tượng Matrix
     }
 
-    public void showMatrix(int[][] array) {
-        for (int i = 0; i < array.length; i++) {             // số dòng
-            for (int j = 0; j < array[i].length; j++) {      // số cột của dòng i
+   public void showMatrix() {
+        if (array == null) {
+            System.out.println("(empty matrix)");
+            return;
+        }
+        for (int i = 0; i < array.length; i++) {
+            for (int j = 0; j < array[i].length; j++) {
                 System.out.print("[" + array[i][j] + "] ");
             }
-            System.out.println(); // xuống dòng sau khi in hết 1 hàng
+            System.out.println();
         }
     }
 
-    public int[][] SubtractMatrix(int[][] a, int[][] b) {
-        if (a.length != b.length || a[0].length != b[0].length) {
-            throw new IllegalArgumentException("Matrix dimensions must be the same for subtraction.");
-        }
-        int row = a.length;
-        int col = a[0].length;
-        int[][] result = new int[row][col];
-        for (int i = 0; i < row; i++) {
-            for (int j = 0; j < col; j++) {
-                result[i][j] = a[i][j] - b[i][j];
+   public Matrix subtract(Matrix other) {
+        checkSameSize(other);
+        int r = array.length, c = array[0].length;
+        int[][] res = new int[r][c];
+        for (int i = 0; i < r; i++) {
+            for (int j = 0; j < c; j++) {
+                res[i][j] = array[i][j] - other.array[i][j];
             }
         }
-        return result;
+        return new Matrix(res);
     }
 
-    public int[][] AddMatrix(int[][] a, int[][] b) {
-        if (a.length != b.length || a[0].length != b[0].length) {
-            throw new IllegalArgumentException("Matrix dimensions must be the same for addition.");
-        }
-        int row = a.length;
-        int col = a[0].length;
-        int[][] result = new int[row][col];
-        for (int i = 0; i < row; i++) {
-            for (int j = 0; j < col; j++) {
-                result[i][j] = a[i][j] + b[i][j];
+    public Matrix add(Matrix other) {
+        checkSameSize(other);
+        int r = array.length, c = array[0].length;
+        int[][] res = new int[r][c];
+        for (int i = 0; i < r; i++) {
+            for (int j = 0; j < c; j++) {
+                res[i][j] = array[i][j] + other.array[i][j];
             }
         }
-        return result;
+        return new Matrix(res);
     }
 
-    public int[][] MulMatrix(int[][] a, int[][] b) {
-        if (a[0].length != b.length) {
-            throw new IllegalArgumentException("Matrix dimensions do not match for multiplication.");
+    public Matrix multiply(Matrix other) {
+        if (array[0].length != other.array.length) {
+            throw new IllegalArgumentException(
+                "Matrix1 columns must equal Matrix2 rows."
+            );
         }
-        int m = a.length;       // số dòng của A
-        int n = a[0].length;    // số cột của A = số dòng của B
-        int p = b[0].length;    // số cột của B
+        int m = array.length;          // rows of A
+        int n = array[0].length;       // cols of A = rows of B
+        int p = other.array[0].length; // cols of B
+        int[][] res = new int[m][p];
 
-        int[][] result = new int[m][p];
-
-        // Tính tích ma trận
         for (int i = 0; i < m; i++) {
-            for (int j = 0; j < p; j++) {
-                for (int k = 0; k < n; k++) {
-                    result[i][j] += a[i][k] * b[k][j];
+            for (int k = 0; k < n; k++) {
+                int aik = array[i][k];
+                for (int j = 0; j < p; j++) {
+                    res[i][j] += aik * other.array[k][j];
                 }
             }
         }
-
-        return result;
+        return new Matrix(res);
     }
 
+    private void checkSameSize(Matrix other) {
+        if (array == null || other.array == null) {
+            throw new IllegalArgumentException("Matrix is null.");
+        }
+        if (array.length != other.array.length ||
+            array[0].length != other.array[0].length) {
+            throw new IllegalArgumentException(
+                "Matrices must have the same dimensions."
+            );
+        }
+    }
 }

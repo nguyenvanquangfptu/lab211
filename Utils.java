@@ -4,7 +4,6 @@
  */
 package com.mycompany.lab211;
 
-import com.mycompany.lab211.slot2.short51.Calculator;
 import java.time.Year;
 import java.util.Scanner;
 
@@ -55,41 +54,6 @@ public class Utils {
             } else {
                 System.out.println("✗ Invalid choice. Please enter U or D.");
             }
-        }
-    }
-
-    // đọc operator hợp lệ → Enum, sai → null
-    public static Calculator.Operator checkOperator(String op) {
-        if (op == null) {
-            return null;
-        }
-        switch (op.trim()) {
-            case "+":
-                return Calculator.Operator.ADD;
-            case "-":
-                return Calculator.Operator.SUBTRACT;
-            case "*":
-                return Calculator.Operator.MULTIPLY;
-            case "/":
-                return Calculator.Operator.DIVIDE;
-            case "^":
-                return Calculator.Operator.POWER;
-            case "=":
-                return Calculator.Operator.EQUAL;
-            default:
-                return null;
-        }
-    }
-
-    public static Calculator.Operator readOperator(String prompt) {
-        while (true) {
-            System.out.print(prompt + " (+, -, *, /, ^, =): ");
-            String s = sc.nextLine();
-            Calculator.Operator op = checkOperator(s);
-            if (op != null) {
-                return op;
-            }
-            System.out.println(" Please input (+, -, *, /, ^, =)");
         }
     }
 
@@ -186,6 +150,54 @@ public class Utils {
         }
     }
 
+    public static String readMajor(String prompt) {
+        while (true) {
+            System.out.print(prompt);
+            String s = sc.nextLine();
+            s = (s == null) ? "" : s.trim();
+
+            // kiểm tra rỗng
+            if (s.isEmpty()) {
+                System.out.println("✗ Major cannot be empty. Please try again.");
+                continue;
+            }
+
+            // kiểm tra độ dài
+            if (s.length() > 30) {
+                System.out.println("✗ Major cannot exceed 30 characters. Please try again.");
+                continue;
+            }
+
+            // kiểm tra chỉ chữ cái + khoảng trắng
+            if (s.matches("[a-zA-Z ]+")) {
+                return s;
+            } else {
+                System.out.println("✗ Major must contain only letters and spaces. Please try again.");
+            }
+        }
+    }
+
+    public static String readName(String prompt) {
+        while (true) {
+            System.out.print(prompt);
+            String s = sc.nextLine();
+            s = (s == null) ? "" : s.trim();
+
+            // kiểm tra rỗng
+            if (s.isEmpty()) {
+                System.out.println("✗ Input cannot be empty. Please try again.");
+                continue;
+            }
+
+            // kiểm tra chỉ chữ cái + khoảng trắng
+            if (s.matches("[a-zA-Z ]+")) {
+                return s;
+            } else {
+                System.out.println("✗ Name must contain only letters and spaces. Please try again.");
+            }
+        }
+    }
+
     public static String readStudentId(String prompt) {
         while (true) {
             System.out.print(prompt + " (format: DE/DA/DS + 4 digits, e.g., DE1234): ");
@@ -217,7 +229,7 @@ public class Utils {
             return input;
         }
     }
-    
+
     public static String readPhoneNumber(String msg) {
         String phone;
 

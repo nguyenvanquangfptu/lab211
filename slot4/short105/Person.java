@@ -4,7 +4,8 @@
  */
 package com.mycompany.lab211.slot4.short105;
 
-import java.util.Date;
+import com.mycompany.lab211.Utils;
+import java.util.List;
 
 /**
  *
@@ -31,6 +32,16 @@ public class Person {
         this.phoneNumber = "";
         this.dob = 0;
         this.major = "";
+    }
+
+    public void InputAll() {
+        // nhập ID và kiểm tra trùng
+        id = Utils.readStudentId("Enter ID (6 digits): ");
+
+        fullName = Utils.readName("Enter full name: ");
+        phoneNumber = Utils.readPhoneNumber("Enter phone number: ");
+        dob = Utils.readYearOfBirth("Enter year of birth: ");
+        major = Utils.readMajor("Enter major: ");
     }
 
     public String getId() {
@@ -72,6 +83,12 @@ public class Person {
     public void setMajor(String major) {
         this.major = major;
     }
+
+   @Override
+public String toString() {
+    return String.format("%-8s | %-20s | %-12s | %-6d | %-20s",
+            id, fullName, phoneNumber, dob, major);
+}
 
 
 }

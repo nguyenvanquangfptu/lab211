@@ -4,7 +4,9 @@
  */
 package com.mycompany.lab211.slot4.short105;
 
+import com.mycompany.lab211.Utils;
 import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -52,6 +54,19 @@ public class Teacher extends Person {
 
     public void setCoeSalary(float coeSalary) {
         this.coeSalary = coeSalary;
+    }
+
+    @Override
+    public void InputAll() {
+        super.InputAll();
+        proYear = Utils.readPositiveInt("Enter profession year: ");
+        typeContract = Utils.readString("Enter contract type: ");
+        coeSalary = Utils.readFloat("Enter salary corfficient: ");
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + String.format(" | %-10d | %-10s | %-8.1f", proYear, typeContract, coeSalary);
     }
 
 }

@@ -12,8 +12,6 @@ import com.mycompany.lab211.Utils;
  */
 public class Test extends Menu {
 
-    private Matrix matrix = new Matrix();
-
     private static final String TITLE = "\n ======= Calculator Program ============";
     private static final String[] ITEMS = {"Addition Matrix", "Subtraction Matrix", "Multiplication Matrix", "Quit"};
 
@@ -27,69 +25,81 @@ public class Test extends Menu {
     @Override
     public void execute(int n) {
         switch (n) {
-            case 1: {
+            case 1: { // Add
                 int a = Utils.readPositiveInt("Enter Row Matrix 1: ");
                 int b = Utils.readPositiveInt("Enter Col Matrix 1: ");
-                int[][] matrix1 = matrix.generateMatrix(a, b);
+                Matrix m1 = new Matrix().generateMatrix(a, b);
+
                 int x = Utils.readPositiveInt("Enter Row Matrix 2: ");
                 int y = Utils.readPositiveInt("Enter Col Matrix 2: ");
-                int[][] matrix2 = matrix.generateMatrix(x, y);
+                Matrix m2 = new Matrix().generateMatrix(x, y);
+
                 try {
                     System.out.println("----- Result -----");
-                    int[][] result = matrix.AddMatrix(matrix1, matrix2);
-                    matrix.showMatrix(matrix1);
+                    Matrix sum = m1.add(m2);
+
+                    m1.showMatrix();
                     System.out.println("+");
-                    matrix.showMatrix(matrix2);
+                    m2.showMatrix();
                     System.out.println("=");
-                    matrix.showMatrix(result);
-                } catch (IllegalArgumentException e) {
-                    System.out.println("✗ Cannot add: Matrices must have the same dimensions.");
-                }
+                    sum.showMatrix();
 
-                break;
+                } catch (IllegalArgumentException e) {
+                    System.out.println("✗ Cannot add: " + e.getMessage());
+                }
+                break; // <-- quan trọng
             }
-            case 2: {
+
+            case 2: { // Subtract
                 int a = Utils.readPositiveInt("Enter Row Matrix 1: ");
                 int b = Utils.readPositiveInt("Enter Col Matrix 1: ");
-                int[][] matrix1 = matrix.generateMatrix(a, b);
+                Matrix m1 = new Matrix().generateMatrix(a, b);
+
                 int x = Utils.readPositiveInt("Enter Row Matrix 2: ");
                 int y = Utils.readPositiveInt("Enter Col Matrix 2: ");
-                int[][] matrix2 = matrix.generateMatrix(x, y);
+                Matrix m2 = new Matrix().generateMatrix(x, y);
+
                 try {
                     System.out.println("----- Result -----");
-                    int[][] result = matrix.SubtractMatrix(matrix1, matrix2);
-                    matrix.showMatrix(matrix1);
+                    Matrix diff = m1.subtract(m2);
+
+                    m1.showMatrix();
                     System.out.println("-");
-                    matrix.showMatrix(matrix2);
+                    m2.showMatrix();
                     System.out.println("=");
-                    matrix.showMatrix(result);
+                    diff.showMatrix();
+
                 } catch (IllegalArgumentException e) {
-                    System.out.println("✗ Cannot subtract: Matrices must have the same dimensions.");
+                    System.out.println("✗ Cannot subtract: " + e.getMessage());
                 }
                 break;
             }
-            case 3: {
+
+            case 3: { // Multiply
                 int a = Utils.readPositiveInt("Enter Row Matrix 1: ");
                 int b = Utils.readPositiveInt("Enter Col Matrix 1: ");
-                int[][] matrix1 = matrix.generateMatrix(a, b);
+                Matrix m1 = new Matrix().generateMatrix(a, b);
+
                 int x = Utils.readPositiveInt("Enter Row Matrix 2: ");
                 int y = Utils.readPositiveInt("Enter Col Matrix 2: ");
-                int[][] matrix2 = matrix.generateMatrix(x, y);
+                Matrix m2 = new Matrix().generateMatrix(x, y);
 
                 try {
                     System.out.println("----- Result -----");
-                    int[][] result = matrix.MulMatrix(matrix1, matrix2);
-                    matrix.showMatrix(matrix1);
+                    Matrix prod = m1.multiply(m2);
+
+                    m1.showMatrix();
                     System.out.println("x");
-                    matrix.showMatrix(matrix2);
+                    m2.showMatrix();
                     System.out.println("=");
-                    matrix.showMatrix(result);
+                    prod.showMatrix();
+
                 } catch (IllegalArgumentException e) {
-                    System.out.println(" Cannot multiply: "
-                            + "Matrix1 columns must equal Matrix2 rows.");
+                    System.out.println(" Cannot multiply: " + e.getMessage());
                 }
                 break;
             }
+
             case 4: {
                 return;
             }

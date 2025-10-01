@@ -9,32 +9,33 @@ package com.mycompany.lab211.slot4.long21;
  * @author HP
  */
 public class Student {
-    private String studentId, studentName, semester, courseName;
 
-    public Student() {
-    }
+    private String id;
+    private String name;
+    private String semester;
+    private String course;
 
-    public Student(String studentId, String studentName, String semester, String courseName) {
-        this.studentId = studentId;
-        this.studentName = studentName;
+    public Student(String id, String name, String semester, String course) {
+        this.id = id;
+        this.name = name;
         this.semester = semester;
-        this.courseName = courseName;
+        this.course = course;
     }
 
-    public String getStudentId() {
-        return studentId;
+    public String getId() {
+        return id;
     }
 
-    public void setStudentId(String studentId) {
-        this.studentId = studentId;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getStudentName() {
-        return studentName;
+    public String getName() {
+        return name;
     }
 
-    public void setStudentName(String studentName) {
-        this.studentName = studentName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getSemester() {
@@ -45,20 +46,16 @@ public class Student {
         this.semester = semester;
     }
 
-    public String getCourseName() {
-        return courseName;
+    public String getCourse() {
+        return course;
     }
 
-    public void setCourseName(String courseName) {
-        this.courseName = courseName;
+    public void setCourse(String course) {
+        this.course = course;
     }
 
     @Override
     public String toString() {
-        return "Student{" + "studentId=" + studentId + ", studentName=" + studentName + ", semester=" + semester + ", courseName=" + courseName + '}';
+        return "Student{" + "id=" + id + ", name=" + name + ", semester=" + semester + ", course=" + course + '}';
     }
-
-   
-
-    
 }

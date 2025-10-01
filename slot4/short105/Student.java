@@ -4,7 +4,8 @@
  */
 package com.mycompany.lab211.slot4.short105;
 
-import java.util.Date;
+import com.mycompany.lab211.Utils;
+
 
 /**
  *
@@ -27,6 +28,13 @@ public class Student extends Person {
         this.engScore = 0;
     }
 
+    @Override
+    public void InputAll() {
+        super.InputAll();
+        admYear = Utils.readPositiveInt("Enter admission year: ");
+        engScore = Utils.readPositiveInt("Enter entrance English score: ");
+    }
+
     public int getAdmYear() {
         return admYear;
     }
@@ -43,4 +51,11 @@ public class Student extends Person {
         this.engScore = engScore;
     }
 
+@Override
+public String toString() {
+    return super.toString() + String.format(" | %-12d | %-10d", admYear, engScore);
+}
+
+
+    
 }
