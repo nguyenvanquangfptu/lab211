@@ -4,16 +4,8 @@
  */
 package com.mycompany.lab211.slot4.long21;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
-/**
- *
- * @author xuan1
- */
 public class StudentManagement {
 
     List<Student> studentList = new ArrayList<>();
@@ -73,17 +65,26 @@ public class StudentManagement {
 
     public void sortStudent(List<Student> list) {
         list.sort(Comparator.comparing(Student::getName));
-        showStudent();
     }
 
-    public List<Student> findStudentsByName(String name) {
-        List<Student> result = new ArrayList<>();
-        for (Student student : studentList) {
-            if (student.getName().equalsIgnoreCase(name)) {
-                result.add(student);
+    public List<Student> findByName(String name) {
+
+        // Nếu người dùng nhập cả full name, chỉ lấy từ cuối cùng
+        String[] inputParts = name.split("\\s+");
+        String keyword = inputParts[inputParts.length - 1]; // chỉ lấy last name
+
+        List<Student> results = new ArrayList<>();
+
+        for (Student s : studentList) {
+            String[] parts = s.getName().trim().toLowerCase().split("\\s+");
+            String lastName = parts[parts.length - 1];
+
+            if (lastName.equalsIgnoreCase(keyword)) {
+                results.add(s);
             }
         }
-        return result;
+        return results;
+
     }
 
     public void reportStudent() {

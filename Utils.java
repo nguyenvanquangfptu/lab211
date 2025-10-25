@@ -37,7 +37,7 @@ public class Utils {
             } else if (input.equalsIgnoreCase("N") || input.equalsIgnoreCase("No")) {
                 return false;  // chọn No
             } else {
-                System.out.println("✗ Invalid input. Please enter Y or N.");
+                System.out.println("Invalid input. Please enter Y or N.");
             }
         }
     }
@@ -52,7 +52,7 @@ public class Utils {
             } else if (input.equalsIgnoreCase("D")) {
                 return false; // Delete
             } else {
-                System.out.println("✗ Invalid choice. Please enter U or D.");
+                System.out.println(" Invalid choice. Please enter U or D.");
             }
         }
     }
@@ -69,7 +69,7 @@ public class Utils {
             } else if (input.equalsIgnoreCase("C/C++") || input.equalsIgnoreCase("C++")) {
                 return "C/C++";
             } else {
-                System.out.println("✗ Invalid course. Please enter only Java, .Net, or C/C++.");
+                System.out.println(" Invalid course. Please enter only Java, .Net, or C/C++.");
             }
         }
     }
@@ -104,10 +104,10 @@ public class Utils {
                 if (yob > 1900 && yob < currentYear) {
                     return yob; // valid
                 } else {
-                    System.out.println("⚠️ Year of birth must be greater than 1900 and less than the current year.");
+                    System.out.println("️ Year of birth must be greater than 1900 and less than the current year.");
                 }
             } catch (NumberFormatException e) {
-                System.out.println("⚠️ Please enter a valid number!");
+                System.out.println("️ Please enter a valid number!");
             }
         }
     }
@@ -164,7 +164,7 @@ public class Utils {
 
             // kiểm tra độ dài
             if (s.length() > 30) {
-                System.out.println("✗ Major cannot exceed 30 characters. Please try again.");
+                System.out.println(" Major cannot exceed 30 characters. Please try again.");
                 continue;
             }
 
@@ -172,7 +172,7 @@ public class Utils {
             if (s.matches("[a-zA-Z ]+")) {
                 return s;
             } else {
-                System.out.println("✗ Major must contain only letters and spaces. Please try again.");
+                System.out.println(" Major must contain only letters and spaces. Please try again.");
             }
         }
     }
@@ -185,7 +185,7 @@ public class Utils {
 
             // kiểm tra rỗng
             if (s.isEmpty()) {
-                System.out.println("✗ Input cannot be empty. Please try again.");
+                System.out.println(" Input cannot be empty. Please try again.");
                 continue;
             }
 
@@ -193,7 +193,7 @@ public class Utils {
             if (s.matches("[a-zA-Z ]+")) {
                 return s;
             } else {
-                System.out.println("✗ Name must contain only letters and spaces. Please try again.");
+                System.out.println(" Name must contain only letters and spaces. Please try again.");
             }
         }
     }
@@ -241,7 +241,7 @@ public class Utils {
             if (phone.matches("\\d{10}")) {
                 return phone; // valid
             } else {
-                System.out.println("⚠️ Phone number must contain exactly 10 digits.");
+                System.out.println("️ Phone number must contain exactly 10 digits.");
             }
         }
     }
@@ -278,7 +278,7 @@ public class Utils {
                 double value = Double.parseDouble(input);
                 return value;
             } catch (NumberFormatException e) {
-                System.out.println("✗ Invalid number! Please enter a valid double.");
+                System.out.println(" Invalid number! Please enter a valid double.");
             }
         }
     }

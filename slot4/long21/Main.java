@@ -5,7 +5,7 @@
 package com.mycompany.lab211.slot4.long21;
 
 import com.mycompany.lab211.Utils;
-import java.util.List;
+import java.util.*;
 
 /**
  *
@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class Main extends Menu {
 
-    StudentManagement students = new StudentManagement();
+    private final StudentDAO dao = new StudentDAO();
     private static final String TITLE = "\n ======= Student Management ============";
     private static final String[] ITEMS = {"Create", "Find and Sort", "Update/ Delete", "Report", "Exit"};
 
@@ -37,7 +37,7 @@ public class Main extends Menu {
                 break;
             }
             case 4: {
-                reportStduent();
+                reportStudent();
                 break;
             }
             case 5: {
@@ -71,62 +71,137 @@ public class Main extends Menu {
         String studentName = Utils.readString("Enter student name: ");
         String semester = Utils.readSemester("Enter semester: ");
         String courseName = Utils.readCourseName("Enter course name: ");
+
         Student s = new Student(studentID, studentName, semester, courseName);
-        if (students.addStudent(s)) {
-            System.out.println("Student add succesfully. ");
+        boolean ok = dao.addStudent(s); // ✅ gọi INSERT qua DAO
+
+        if (ok) {
+            System.out.println("✅ Student added successfully.");
         } else {
-            System.out.println("Cannot add. ");
+            System.out.println("⚠️ Cannot add (duplicate ID or DB error).");
         }
     }
 
     private void updateOrDeleteStudent() {
         String sID = Utils.readStudentId("Enter id: ").trim();
-        if (students.isEmpty()) {
-            System.out.println("No student to excute.");
+
+        // 1️⃣ Lấy danh sách hiện tại từ DB
+        List<Student> all = dao.getAllStudents();
+        if (all.isEmpty()) {
+            System.out.println("No student to execute.");
             return;
         }
-        Student exist = students.findById(sID);
+
+        // 2️⃣ Kiểm tra xem ID này có tồn tại không
+        Student exist = findByIdLocal(all, sID);
         if (exist == null) {
-            System.out.println("No found student with ID: " + sID);
-            return; // thoát hàm, không update/delete nữa
+            System.out.println("No student found with ID: " + sID);
+            return;
         }
+
+        // 3️⃣ Hỏi người dùng muốn update hay delete
         boolean isUpdate = Utils.readUpdateOrDelete("Do you want to update (Y) or delete (N) student?");
+
         if (isUpdate) {
-            // UPDATE
+            // --- UPDATE ---
             String newName = Utils.readString("Enter new student name: ");
             String newSemester = Utils.readSemester("Enter new semester: ");
             String newCourse = Utils.readCourseName("Enter new course name: ");
-            students.updateStudent(sID, newName, newSemester, newCourse);
 
-            System.out.println(" Update successfully.");
+            // Tạo 1 đối tượng mới với dữ liệu đã sửa
+            Student updated = new Student(sID, newName, newSemester, newCourse);
+
+            // Gọi DAO để UPDATE trong SQL
+            boolean ok = dao.updateStudent(updated);
+            System.out.println(ok ? "✅ Update successfully." : "⚠️ Update failed.");
+
         } else {
-            // DELETE (xóa an toàn bằng index)
-            students.deleteStudent(sID);
-            System.out.println(" Remove successfully.");
+            // --- DELETE ---
+            boolean ok = dao.deleteStudent(sID);
+            System.out.println(ok ? "✅ Remove successfully." : "⚠️ Remove failed.");
         }
     }
 
-    private void reportStduent() {
-        if (students.isEmpty()) {
-            System.out.println("No students to report. ");
-        } else {
-            students.reportStudent();
+// ================== Helpers ==================
+    private Student findByIdLocal(List<Student> list, String id) {
+        for (Student s : list) {
+            if (s.getId() != null && s.getId().equalsIgnoreCase(id)) {
+                return s;  // tìm thấy thì trả về student đó
+            }
         }
+        return null; // không thấy thì trả null
     }
+// ================== REPORT (DAO) ==================
+
+    private void reportStudent() {
+        List<Student> all = dao.getAllStudents(); // lấy từ SQL
+        if (all.isEmpty()) {
+            System.out.println("No students to report.");
+            return;
+        }
+
+        // Đếm theo ID | Semester | Course (đúng với code cũ của bạn)
+        Map<String, Integer> report = new LinkedHashMap<>();
+        for (Student st : all) {
+            String key = st.getId() + " | " + st.getSemester() + " | " + st.getCourse();
+            report.put(key, report.getOrDefault(key, 0) + 1);
+        }
+
+        System.out.println("\n------ REPORT (ID | Semester | Course | Total) ------");
+        report.forEach((k, v) -> System.out.println(k + " | " + v));
+    }
+// ================== FIND & SORT (DAO) ==================
 
     private void findAndSort() {
         String input = Utils.readString("Enter student name (or full name): ").trim().toLowerCase();
-        if (students.isEmpty()) {
-            System.out.println("No student to excute.");
-            return;
-        } 
-        List<Student> result = students.findStudentsByName(input);  
-        if(result.isEmpty()){
-            System.out.printf("No student found with name %s", input);
+
+        List<Student> all = dao.getAllStudents(); // lấy từ SQL
+        if (all.isEmpty()) {
+            System.out.println("No student to execute.");
             return;
         }
-        students.sortStudent(result);
-        students.showStudent(result);
+
+        // Giữ logic cũ: so khớp theo "last name" của input
+        String[] inParts = input.split("\\s+");
+        String keyword = inParts[inParts.length - 1]; // last word
+
+        List<Student> result = new ArrayList<>();
+        for (Student s : all) {
+            String name = s.getName() == null ? "" : s.getName().trim().toLowerCase();
+            String[] parts = name.split("\\s+");
+            String lastName = parts.length == 0 ? "" : parts[parts.length - 1];
+            if (lastName.equalsIgnoreCase(keyword)) {
+                result.add(s);
+            }
+        }
+
+        if (result.isEmpty()) {
+            System.out.printf("No student found with name %s%n", input);
+            return;
+        }
+
+        // Sort theo Name (ignore case), rồi đến ID để ổn định
+        result.sort(Comparator
+                .comparing(Student::getName, String.CASE_INSENSITIVE_ORDER)
+                .thenComparing(Student::getId, String.CASE_INSENSITIVE_ORDER));
+
+        showStudents(result); // dùng helper in danh sách (đã có trong Main ở bản trước)
+    }
+// ================== Helper: In danh sách sinh viên ==================
+
+    private void showStudents(List<Student> list) {
+        System.out.println("\n------ STUDENT LIST ------");
+        System.out.printf("%-10s | %-25s | %-10s | %-10s%n",
+                "ID", "Name", "Semester", "Course");
+        System.out.println("---------------------------------------------------------------");
+
+        for (Student s : list) {
+            System.out.printf("%-10s | %-25s | %-10s | %-10s%n",
+                    s.getId(),
+                    s.getName(),
+                    s.getSemester(),
+                    s.getCourse());
+        }
     }
 
     public static void main(String[] args) {
