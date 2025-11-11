@@ -11,6 +11,7 @@ package com.mycompany.lab211.slot5.short12;
 import java.util.*;
 
 public class CourseManagement {
+
     private static List<Course> courses = new ArrayList<>();
     private static Scanner sc = new Scanner(System.in);
 
@@ -27,11 +28,21 @@ public class CourseManagement {
 
             String choice = sc.nextLine();
             switch (choice) {
-                case "1": addCourse(); break;
-                case "2": updateCourse(); break;
-                case "3": deleteCourse(); break;
-                case "4": printCourse(); break;
-                case "5": searchByName(); break;   // ✅ Sửa: tìm theo tên
+                case "1":
+                    addCourse();
+                    break;
+                case "2":
+                    updateCourse();
+                    break;
+                case "3":
+                    deleteCourse();
+                    break;
+                case "4":
+                    printCourse();
+                    break;
+                case "5":
+                    searchByName();
+                    break;   // ✅ Sửa: tìm theo tên
                 case "6":
                     System.out.println("BYE AND SEE YOU NEXT TIME");
                     return;
@@ -66,7 +77,9 @@ public class CourseManagement {
     // ================== Find by ID ==================
     private static Course findByID(String id) {
         for (Course c : courses) {
-            if (c.getCourseID().equalsIgnoreCase(id)) return c;
+            if (c.getCourseID().equalsIgnoreCase(id)) {
+                return c;
+            }
         }
         return null;
     }
@@ -75,13 +88,17 @@ public class CourseManagement {
     private static void updateCourse() {
         System.out.println("*** Update course ***");
         Course c = searchByID();
-        if (c == null) return;
+        if (c == null) {
+            return;
+        }
 
         System.out.println("*** Updating ***");
 
         System.out.print("Course name: ");
         String name = sc.nextLine();
-        if (!name.isEmpty()) c.setCourseName(name);
+        if (!name.isEmpty()) {
+            c.setCourseName(name);
+        }
 
         System.out.print("Credits: ");
         String cr = sc.nextLine().trim();
@@ -105,7 +122,9 @@ public class CourseManagement {
     private static void deleteCourse() {
         System.out.println("*** Delete course ***");
         Course c = searchByID();
-        if (c == null) return;
+        if (c == null) {
+            return;
+        }
         courses.remove(c);
         System.out.println("Deleted successfully");
     }
@@ -143,7 +162,9 @@ public class CourseManagement {
         boolean found = false;
         for (Course c : courses) {
             if (c.getCourseName().toLowerCase().contains(keyword)) {
-                if (!found) System.out.println("*** Search results ***");
+                if (!found) {
+                    System.out.println("*** Search results ***");
+                }
                 System.out.println(c);
                 found = true;
             }
@@ -161,8 +182,12 @@ public class CourseManagement {
             Course c = findByID(id);
             if (c == null) {
                 System.out.print("No data found, do you want to find again? (Y/N): ");
-                if (!sc.nextLine().equalsIgnoreCase("Y")) return null;
-            } else return c;
+                if (!sc.nextLine().equalsIgnoreCase("Y")) {
+                    return null;
+                }
+            } else {
+                return c;
+            }
         }
     }
 }

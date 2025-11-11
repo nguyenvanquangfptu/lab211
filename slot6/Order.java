@@ -12,6 +12,7 @@ import java.util.List;
  * @author HP
  */
 public class Order {
+
     private String customerName;
     private List<OrderDetail> items = new ArrayList<>();
     private double total;
@@ -28,8 +29,6 @@ public class Order {
     public String getCustomerName() {
         return customerName;
     }
-    
-    
 
     public List<OrderDetail> getItems() {
         return items;
@@ -43,9 +42,9 @@ public class Order {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(String.format("Customer: %s ", customerName)).append("\n");
-        sb.append(String.format("%-10s | %-10s | %-10s | %-10s\n  ", "Product","Quantity", "Price", "Amount"));  
+        sb.append(String.format("%-10s | %-10s | %-10s | %-10s\n  ", "Product", "Quantity", "Price", "Amount"));
         int i = 1;
-        for(OrderDetail od : items){
+        for (OrderDetail od : items) {
             sb.append(i).append(od.toString()).append("\n");
         }
         return sb.toString();

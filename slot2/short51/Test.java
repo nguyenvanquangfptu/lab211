@@ -5,6 +5,7 @@
 package com.mycompany.lab211.slot2.short51;
 
 import com.mycompany.lab211.Utils;
+import com.mycompany.lab211.Menu;
 
 /**
  *

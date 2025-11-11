@@ -4,7 +4,7 @@
  */
 package com.mycompany.lab211;
 
-import java.time.Year;
+
 import java.util.Scanner;
 
 /**
@@ -91,27 +91,6 @@ public class Utils {
         }
     }
 
-    /// Hàm integer
-    public static int readYearOfBirth(String msg) {
-        int currentYear = Year.now().getValue(); // current year
-        int yob;
-
-        while (true) {
-            try {
-                System.out.print(msg);
-                yob = Integer.parseInt(sc.nextLine().trim());
-
-                if (yob > 1900 && yob < currentYear) {
-                    return yob; // valid
-                } else {
-                    System.out.println("️ Year of birth must be greater than 1900 and less than the current year.");
-                }
-            } catch (NumberFormatException e) {
-                System.out.println("️ Please enter a valid number!");
-            }
-        }
-    }
-
     public static int readInt(String prompt) {
         while (true) {
             System.out.print(prompt);
@@ -119,6 +98,22 @@ public class Utils {
                 return Integer.parseInt(sc.nextLine().trim());
             } catch (NumberFormatException ignored) {
                 System.out.println("Please input integer value.");
+            }
+        }
+    }
+
+    public static int readIntInRange(String label, int min, int max) {
+        while (true) {
+            System.out.print(label);
+            String s = sc.nextLine().trim();
+            try {
+                int v = Integer.parseInt(s);
+                if (v < min || v > max) {
+                    throw new NumberFormatException();
+                }
+                return v;
+            } catch (NumberFormatException e) {
+                System.out.printf("⚠ Nhập số trong khoảng [%d, %d].%n", min, max);
             }
         }
     }

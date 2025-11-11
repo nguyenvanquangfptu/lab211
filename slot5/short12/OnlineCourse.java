@@ -8,7 +8,6 @@ package com.mycompany.lab211.slot5.short12;
  *
  * @author HP
  */
-
 import java.util.List;
 import java.util.Scanner;
 
@@ -16,8 +15,8 @@ import java.util.Scanner;
  *
  * @author Nguyen Phuong
  */
-
 public class OnlineCourse extends Course {
+
     private String platform;
     private String instructors;
     private String note;
@@ -28,7 +27,7 @@ public class OnlineCourse extends Course {
         this.instructors = "";
         this.note = "";
     }
-    
+
 //    @Override
     public void inputAll(Scanner sc, List<Course> list) {
         // Course ID
@@ -101,7 +100,9 @@ public class OnlineCourse extends Course {
 
     private boolean isDuplicateID(List<Course> list, String id) {
         for (Course c : list) {
-            if (c.getCourseID().equalsIgnoreCase(id)) return true;
+            if (c.getCourseID().equalsIgnoreCase(id)) {
+                return true;
+            }
         }
         return false;
     }
@@ -111,5 +112,4 @@ public class OnlineCourse extends Course {
         return super.toString() + "-" + platform + "-" + instructors + "-" + note;
     }
 
-    
 }

@@ -4,6 +4,7 @@
  */
 package com.mycompany.lab211.slot4.long21;
 
+import com.mycompany.lab211.Menu;
 import com.mycompany.lab211.Utils;
 import java.util.*;
 

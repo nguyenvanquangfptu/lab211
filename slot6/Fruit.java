@@ -11,6 +11,7 @@ import java.util.Objects;
  * @author HP
  */
 public class Fruit {
+
     private String id;
     private String name;
     private double price;
@@ -67,22 +68,23 @@ public class Fruit {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
         Fruit other = (Fruit) obj;
         return id.equalsIgnoreCase(other.id);
     }
 
     @Override
     public int hashCode() {
-         return Objects.hash(id);
+        return Objects.hash(id);
     }
-    
-    
 
     @Override
     public String toString() {
-        return String.format("%15s %15s %15.2f %15d",name,origin,price,stockQuantity );
+        return String.format("%15s %15s %15.2f %15d", name, origin, price, stockQuantity);
     }
 }
-    

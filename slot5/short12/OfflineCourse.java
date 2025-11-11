@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class OfflineCourse extends Course {
+
     private LocalDate begin;
     private LocalDate end;
     private String campus;
@@ -120,7 +121,9 @@ public class OfflineCourse extends Course {
 
     private boolean isDuplicateID(List<Course> list, String id) {
         for (Course c : list) {
-            if (c.getCourseID().equalsIgnoreCase(id)) return true;
+            if (c.getCourseID().equalsIgnoreCase(id)) {
+                return true;
+            }
         }
         return false;
     }

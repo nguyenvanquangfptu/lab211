@@ -4,6 +4,8 @@
  */
 package com.mycompany.lab211.slot1.short50;
 
+import com.mycompany.lab211.Menu;
+
 /**
  *
  * @author HP

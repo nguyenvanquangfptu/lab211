@@ -9,6 +9,7 @@ package com.mycompany.lab211.slot6;
  * @author HP
  */
 public class OrderDetail {
+
     private Fruit fruit;
     private int quantity;
     private double amount;
@@ -45,7 +46,7 @@ public class OrderDetail {
 
     @Override
     public String toString() {
-        return String.format("%-10s | %-10d | %-10.3f | %-10.3f  ", fruit.getName(),quantity, fruit.getPrice(), amount);
+        return String.format("%-10s | %-10d | %-10.3f | %-10.3f  ", fruit.getName(), quantity, fruit.getPrice(), amount);
     }
-    
+
 }

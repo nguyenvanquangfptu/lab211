@@ -5,7 +5,7 @@
 package com.mycompany.lab211.slot4.short105;
 
 import com.mycompany.lab211.Utils;
-import java.util.List;
+import java.time.Year;
 
 /**
  *
@@ -40,7 +40,8 @@ public class Person {
 
         fullName = Utils.readName("Enter full name: ");
         phoneNumber = Utils.readPhoneNumber("Enter phone number: ");
-        dob = Utils.readYearOfBirth("Enter year of birth: ");
+        int namHienTai = Year.now().getValue();
+        dob = Utils.readIntInRange("Enter year of birth", 1900, namHienTai);
         major = Utils.readMajor("Enter major: ");
     }
 
@@ -84,11 +85,10 @@ public class Person {
         this.major = major;
     }
 
-   @Override
-public String toString() {
-    return String.format("%-8s | %-20s | %-12s | %-6d | %-20s",
-            id, fullName, phoneNumber, dob, major);
-}
-
+    @Override
+    public String toString() {
+        return String.format("%-8s | %-20s | %-12s | %-6d | %-20s",
+                id, fullName, phoneNumber, dob, major);
+    }
 
 }

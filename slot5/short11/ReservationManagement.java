@@ -8,12 +8,12 @@ package com.mycompany.lab211.slot5.short11;
  *
  * @author HP
  */
-
-    import java.time.LocalDateTime;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class ReservationManagement {
+
     private static List<Reservation> reservations = new ArrayList<>();
     private static Scanner sc = new Scanner(System.in);
     private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
@@ -31,11 +31,21 @@ public class ReservationManagement {
 
             String choice = sc.nextLine();
             switch (choice) {
-                case "1": createReservation(); break;
-                case "2": updateReservation(); break;
-                case "3": deleteReservation(); break;
-                case "4": printFlightInfo(); break;
-                case "5": printAll(); break;
+                case "1":
+                    createReservation();
+                    break;
+                case "2":
+                    updateReservation();
+                    break;
+                case "3":
+                    deleteReservation();
+                    break;
+                case "4":
+                    printFlightInfo();
+                    break;
+                case "5":
+                    printAll();
+                    break;
                 case "6":
                     System.out.println("BYE AND SEE YOU NEXT TIME");
                     return;
@@ -55,7 +65,9 @@ public class ReservationManagement {
             id = sc.nextLine();
             if (!id.matches("\\d{6}") || findById(id) != null) {
                 System.out.println("Data input is invalid");
-            } else break;
+            } else {
+                break;
+            }
         }
 
         String name;
@@ -64,7 +76,9 @@ public class ReservationManagement {
             name = sc.nextLine();
             if (!name.matches("[A-Za-z ]+")) {
                 System.out.println("Data input is invalid");
-            } else break;
+            } else {
+                break;
+            }
         }
 
         String phone;
@@ -73,7 +87,9 @@ public class ReservationManagement {
             phone = sc.nextLine();
             if (!phone.matches("\\d{12}")) {
                 System.out.println("Data input is invalid");
-            } else break;
+            } else {
+                break;
+            }
         }
 
         String room;
@@ -82,7 +98,9 @@ public class ReservationManagement {
             room = sc.nextLine();
             if (!room.matches("\\d{4}")) {
                 System.out.println("Data input is invalid");
-            } else break;
+            } else {
+                break;
+            }
         }
 
         LocalDateTime bookingDate;
@@ -92,7 +110,9 @@ public class ReservationManagement {
                 bookingDate = LocalDateTime.parse(sc.nextLine() + " 00:00", formatter);
                 if (bookingDate.isBefore(LocalDateTime.now())) {
                     System.out.println("Data input is invalid");
-                } else break;
+                } else {
+                    break;
+                }
             } catch (Exception e) {
                 System.out.println("Data input is invalid");
             }
@@ -117,7 +137,9 @@ public class ReservationManagement {
                     pickUpTime = LocalDateTime.parse(sc.nextLine(), formatter);
                     if (pickUpTime.isBefore(LocalDateTime.now()) || pickUpTime.isAfter(bookingDate)) {
                         System.out.println("Data input is invalid");
-                    } else break;
+                    } else {
+                        break;
+                    }
                 } catch (Exception e) {
                     System.out.println("Data input is invalid");
                 }
@@ -134,19 +156,27 @@ public class ReservationManagement {
     private static void updateReservation() {
         System.out.println("*** Update reservation ***");
         Reservation r = searchReservation();
-        if (r == null) return;
+        if (r == null) {
+            return;
+        }
 
         System.out.print("Name: ");
         String name = sc.nextLine();
-        if (!name.isEmpty() && name.matches("[A-Za-z ]+")) r.setCustomerName(name);
+        if (!name.isEmpty() && name.matches("[A-Za-z ]+")) {
+            r.setCustomerName(name);
+        }
 
         System.out.print("Phone: ");
         String phone = sc.nextLine();
-        if (!phone.isEmpty() && phone.matches("\\d{12}")) r.setPhoneNumber(phone);
+        if (!phone.isEmpty() && phone.matches("\\d{12}")) {
+            r.setPhoneNumber(phone);
+        }
 
         System.out.print("RoomNumbers: ");
         String room = sc.nextLine();
-        if (!room.isEmpty() && room.matches("\\d{4}")) r.setRoomNumber(room);
+        if (!room.isEmpty() && room.matches("\\d{4}")) {
+            r.setRoomNumber(room);
+        }
 
         System.out.println("Information saved successfully.");
     }
@@ -156,7 +186,9 @@ public class ReservationManagement {
     private static void deleteReservation() {
         System.out.println("*** Delete reservation ***");
         Reservation r = searchReservation();
-        if (r == null) return;
+        if (r == null) {
+            return;
+        }
         System.out.print("Are you sure you want to delete this information? (Y/N): ");
         if (sc.nextLine().equalsIgnoreCase("Y")) {
             reservations.remove(r);
@@ -169,8 +201,8 @@ public class ReservationManagement {
         System.out.println("*** Flight Information ***");
         for (Reservation r : reservations) {
             if (r.getFlightInformation() != null) {
-                System.out.println(r.getBookingID() + " - " + r.getCustomerName() + " - " +
-                        r.getPhoneNumber() + " - " + r.getFlightInformation().toString());
+                System.out.println(r.getBookingID() + " - " + r.getCustomerName() + " - "
+                        + r.getPhoneNumber() + " - " + r.getFlightInformation().toString());
             }
         }
     }
@@ -195,16 +227,21 @@ public class ReservationManagement {
             if (r == null) {
                 System.out.println("No information found");
                 System.out.print("You want to find again? (Y/N): ");
-                if (!sc.nextLine().equalsIgnoreCase("Y")) return null;
-            } else return r;
+                if (!sc.nextLine().equalsIgnoreCase("Y")) {
+                    return null;
+                }
+            } else {
+                return r;
+            }
         }
     }
 
     private static Reservation findById(String id) {
         for (Reservation r : reservations) {
-            if (r.getBookingID().equals(id)) return r;
+            if (r.getBookingID().equals(id)) {
+                return r;
+            }
         }
         return null;
     }
 }
-
